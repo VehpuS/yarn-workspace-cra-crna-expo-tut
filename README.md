@@ -4,9 +4,11 @@ Playing around with yarn workspaces, cra, crna, expo - based on [Ben Awad's vide
 
 ## Changes from Ben Awad's tutorial
 
-* `create-react-native-app` is now completely replaced by expo - so [I just use it](https://docs.expo.io/versions/v32.0.0/workflow/up-and-running/).
-* I made `config-overrides.js` more lean.
-* I made my own change to `App.js` in web (because the template has changed with `react-scripts@2.0.0`).
+* `create-react-native-app` is now completely replaced by [expo](https://docs.expo.io/versions/v32.0.0/workflow/up-and-running/) - so I just use it.
+* I made `./packages/web/config-overrides.js` more lean.
+* I make my own change to `App.js` in the web and app (because the template has changed with `react-scripts@2.0.0`).
+* I change the "main" entery in `./packages/app/package.json`.
+* I do not change `app.json` at all.
 
 ## How to set this up
 
@@ -25,10 +27,10 @@ Playing around with yarn workspaces, cra, crna, expo - based on [Ben Awad's vide
 
 ### Making the web app work with the common package
 
-7. Add to devDependencies to the web app:
+1. Add to devDependencies to the web app:
     * `cd packages/web`
     * `yarn add --dev react-app-rewire-yarn-workspaces react-app-rewired`
-8. Change the four scripts using `react-scripts` to use `react-app-rewired` instead.
+2. In `./packges/web/packages.json` change the four scripts using `react-scripts` to use `react-app-rewired` instead.
     * \-    "start": "react-scripts start",
     * \+    "start": "react-app-rewired start",
     * \-    "build": "react-scripts build",
@@ -37,13 +39,27 @@ Playing around with yarn workspaces, cra, crna, expo - based on [Ben Awad's vide
     * \+    "test": "react-app-rewired test",
     * \-    "eject": "react-scripts eject"
     * \+    "eject": "react-app-rewired eject"
-9.  Add a `config-overrides.js` file to your web package, re-exporting `rewireYarnWorspaces` from `react-app-rewire-yarn-workspaces`:
-    * `module.exports = require("react-app-rewire-yarn-workspaces");`
-10. Add `"@yarn-workspace-cra-crna-expo-tut/common": "1.0.0"` to the web package dependencies.
-11. Change `App.js` in the web package to use the function from the `common` package.
+3. Add a file named `./packges/web/config-overrides.js` file, containing the following code: `module.exports = require("react-app-rewire-yarn-workspaces");`
+4. Add `"@yarn-workspace-cra-crna-expo-tut/common": "1.0.0"` to the dependencies in `./packges/web/packages.json`.
+5. Change `./packges/web/src/App.js` to use the function from the `common` package.
     * First, add `import { add } from '@yarn-workspace-cra-crna-expo-tut/common';` to the file.
     * Then change `Learn React` to `Learning React is like learning 1 + 1 = {add(1, 1)}`.
-12. Run `yarn start` from within the web package to confirm this is working!
+6. Run `yarn start` from within the web package to confirm this is working!
+
+### Making the mobile app work with the common package
+
+1. In `./packages/app/package.json` add `"name": "@yarn-workspace-cra-crna-expo-tut/app", "version": "1.0.0",`.
+2. In the `app` package directory, run `yarn add --dev crna-make-symlinks-for-yarn-workspaces`.
+3. Add a file called `./packages/app/link-workspaces.js` with this: `require('crna-make-symlinks-for-yarn-workspaces')(__dirname);`.
+4. Add prestart script to `./packges/app/package.json`: `"prestart": "node link-workspaces.js",`.
+5. Add `"@yarn-workspace-cra-crna-expo-tut/common": "1.0.0"` to the app package dependencies.
+6. Change `App.js` in the app package to use the function from the `common` package.
+    * First, add `import { add } from '@yarn-workspace-cra-crna-expo-tut/common';` to the file.
+    * Then add `<Text>TEST: 1 + 1 = {add(1,1)}</Text>` to the App's `View` component.
+7. In the root project, create a file named `App.js` with the contents
+    * `import App from './packages/app/App';`
+    * `export default App;`
+8. Run `yarn start` from within the web package to confirm this is working!
 
 ## Other things to remember from learning to do this
 

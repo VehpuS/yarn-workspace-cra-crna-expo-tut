@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { add } from '@yarn-workspace-cra-crna-expo-tut/common';
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>React Native is like doing 1 + 1 = {add(1,1)}!</Text>
       </View>
     );
   }

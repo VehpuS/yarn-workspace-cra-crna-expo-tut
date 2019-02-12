@@ -1,6 +1,9 @@
 {
+  "name": "@yarn-workspace-cra-crna-expo-tut/app",
+  "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "prestart": "node link-workspaces.js",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -9,10 +12,12 @@
   "dependencies": {
     "expo": "^32.0.0",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "@yarn-workspace-cra-crna-expo-tut/common": "1.0.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "crna-make-symlinks-for-yarn-workspaces": "^1.0.1"
   },
   "private": true
 }
