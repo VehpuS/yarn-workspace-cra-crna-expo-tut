@@ -2,6 +2,8 @@
 
 Playing around with yarn workspaces, cra, crna, expo - based on [Ben Awad's video tutorial](https://www.youtube.com/watch?v=iM4NRM2diPc&list=PLN3n1USn4xll1d97ZtIk2t7UpSxWGdIn5&index=2) and this [Medium article](https://medium.com/viewstools/how-to-use-yarn-workspaces-with-create-react-app-and-create-react-native-app-expo-to-share-common-ea27bc4bad62).
 
+!! Make sure you go over security warnings if basing a new project on this code !!
+
 ## Changes from Ben Awad's tutorial
 
 * `create-react-native-app` is now completely replaced by [expo](https://docs.expo.io/versions/v32.0.0/workflow/up-and-running/) - so I just use it.
